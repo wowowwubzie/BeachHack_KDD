@@ -2,3 +2,33 @@
 myenv/
 venv/
 .env/
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+ENV/
+myenv/
+
+# Environment & config
+.env
+.env.local
+.env.*.local
+
+# macOS system files
+.DS_Store
+
+# VS Code settings (optional)
+.vscode/
