@@ -5,20 +5,18 @@ const csv = require('csv-parser');
 // dataset is relatively small, so use an array to hold glucose readings for faster access
 const glucoseData = [];
 
-fs.createReadStream('../data/glucose_20-10-2023.csv')
+fs.createReadStream('../data/cleaned_glucose_data.csv')
   .pipe(csv())
   .on('data', (row) => {
-    // only get the columns needed
-    const selectedColumns = {
-      'timestamp': row['20-10-2023 03:03 AM UTC'],
-      'scan_glucose_mmol/L': row['Unnamed: 5']
-    };
-
-    glucoseData.push(selectedColumns);  // store 
+    const glucoseValue = parseFloat(row[' Scan_Glucose_mmol/L']);
+    
+    // store value with appropriate as appropriate type
+    glucoseData.push({
+      Timestamp_UTC: row['Timestamp_UTC'],
+      Scan_Glucose_mmol_L: glucoseValue,  // Use the parsed float value
+    });
   })
   .on('end', () => { // verification
     console.log('cvs file successfully processed');
-    // clean data = get rid of null/undefined values
-    const cleanedData = glucoseData.filter(row => row['scan_glucose_mmol/L'] !== null && row['scan_glucose_mmol/L'] !== undefined && row['scan_glucose_mmol/L'] !== "");
-    //console.log(glucoseData[0]);  
+   //console.log("First 5 records:", glucoseData.slice(0, 5)); // Log first 5 records 
   });
