@@ -5,15 +5,6 @@ const express = require('express'); //this lets us keep our routes in separate f
                                     //without it we wouldnt be able to define the route logic clearly
 const axios = require('axios')  
 const router = express.Router();
-<<<<<<< Updated upstream
-
-const OPENFOODFACTS_URL = "https://world.openfoodfacts.org/api/v0/product/";
-const FDC_API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3cBhBI8QKvVgo9hb6zm5e88idGnegrh75lFC83qG&query=";
-
-router.post('/', async (req, res) => {
-    const { barcode } = req.body;
-    console.log(`Received barcode: ${barcode}` ); // LOG THE BARCODE IN BACKEND
-=======
 // Add this at the top
 require('dotenv').config();  // Enables reading from .env
 
@@ -25,7 +16,6 @@ const FDC_API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search";
 router.post('/', async (req, res) => {
     const { barcode } = req.body;
     console.log("Received barcode: ${barcode}" ); // LOG THE BARCODE IN BACKEND
->>>>>>> Stashed changes
 
     if (!barcode) {
         return res.status(400).json({ error: "Barcode is required" });
@@ -36,11 +26,7 @@ router.post('/', async (req, res) => {
         let response = await axios.get(`${OPENFOODFACTS_URL}${barcode}.json`);
         if (response.data.status === 1) {
             const product = response.data.product;
-<<<<<<< Updated upstream
-            console.log(`Found in OpenFoodFacts: ${product.product_name}`); // LOG API RESPONSE
-=======
             console.log("Found in OpenFoodFacts: ${product.product_name}"); // LOG API RESPONSE
->>>>>>> Stashed changes
             return res.json({
                 food_name: product.product_name || "Unknown",
                 carbs: product.nutriments.carbohydrates_100g || 0,
@@ -48,17 +34,6 @@ router.post('/', async (req, res) => {
             });
         }
 
-<<<<<<< Updated upstream
-        // Try FDC API if not found
-        console.log(`Not found in OpenFoodFacts, trying FDC...`);
-        response = await axios.get(`${FDC_API_URL}${barcode}`);
-        if (response.data.foods && response.data.foods.length > 0) {
-            const food = response.data.foods[0];
-            console.log(`Found in FDC: ${food.description}`);
-            return res.json({
-                food_name: food.description,
-                carbs: food.foodNutrients.find(n => n.nutrientName === "Carbohydrate, by difference")?.value || 0,
-=======
         // FDC api call,,, we have the api URL, and the parameters to complete the call are the 
         // API key (which is sfely stored in the .env file (dont forget to run "npm install dotenv" in terminal))
         // barcode will be the ID of the food item that we are looking for
@@ -76,7 +51,6 @@ router.post('/', async (req, res) => {
                 food_name: food.description,
                 carbs: carbNutrient?.value || 0,
                 carbs_unit: carbNutrient?.unitName || "g",
->>>>>>> Stashed changes
                 gi: "N/A"
             });
         }
