@@ -54,6 +54,11 @@ while True:
             except requests.exceptions.RequestException as e:
                 print("Failed to connect to the Backend",e)
 
+            # Once a barcode is scanned, close the camera and exit
+            cap.release()  # Release the camera
+            cv2.destroyAllWindows()  # Close any OpenCV windows
+            exit()
+
     # Show the live camera feed
     cv2.imshow("Barcode Scanner", frame)
 
