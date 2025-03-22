@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# adding the .env file to the .gitignore to make sure it is privateeee
+.env
