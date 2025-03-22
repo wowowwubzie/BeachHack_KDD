@@ -14,7 +14,7 @@ async function run() {
   try {
     glucoseData = await loadGlucoseData(); // Wait until glucose data is loaded
     //test - type, carb, time
-    const result = canConsume('type1', 30, '16:58:00'); // get reading from time and calculate based on reading and carb and predict effect based on diabetes type
+    //const result = canConsume('type1', 30, '16:58:00'); // get reading from time and calculate based on reading and carb and predict effect based on diabetes type
     console.log(result);
   } catch (error) {
     console.error('Error loading glucose data:', error);
