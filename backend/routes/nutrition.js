@@ -15,7 +15,7 @@ const FDC_API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search";
 
 router.post('/', async (req, res) => {
     const { barcode } = req.body;
-    console.log("Received barcode: ${barcode}" ); // LOG THE BARCODE IN BACKEND
+    console.log(`Received barcode in backend: ${barcode}`);
 
     if (!barcode) {
         return res.status(400).json({ error: "Barcode is required" });
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
         let response = await axios.get(`${OPENFOODFACTS_URL}${barcode}.json`);
         if (response.data.status === 1) {
             const product = response.data.product;
-            console.log("Found in OpenFoodFacts: ${product.product_name}"); // LOG API RESPONSE
+            console.log(`Found in OpenFoodFacts: ${product.product_name}`); // LOG API RESPONSE
             return res.json({
                 food_name: product.product_name || "Unknown",
                 carbs: product.nutriments.carbohydrates_100g || 0,
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
         // FDC api call,,, we have the api URL, and the parameters to complete the call are the 
         // API key (which is sfely stored in the .env file (dont forget to run "npm install dotenv" in terminal))
         // barcode will be the ID of the food item that we are looking for
-        console.log("Not found in OpenFoodFacts, trying FDC...");
+        console.log(`Not found in OpenFoodFacts, trying FDC...`);
         response = await axios.get(FDC_API_URL, {
             params: {
                 api_key: FDC_API_KEY,
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
         });
         if (response.data.foods && response.data.foods.length > 0) {
             const food = response.data.foods[0];
-            console.log("Found in FDC: ${food.description}");
+            console.log(`Found in FDC: ${food.description}`);
             return res.json({   // updated the format of the response and what we need from it below
                 food_name: food.description,
                 carbs: carbNutrient?.value || 0,
@@ -55,11 +55,11 @@ router.post('/', async (req, res) => {
             });
         }
 
-        console.log("Not found in any API");
+        console.log(`Not found in any API`);
         return res.status(404).json({ error: "Food not found in OpenFoodFacts or FDC" });
 
     } catch (error) {
-        console.error("Error fetching food data:", error);
+        console.error(`Error fetching food data:`, error);
         res.status(500).json({ error: "Failed to fetch food data" });
     }
 });
