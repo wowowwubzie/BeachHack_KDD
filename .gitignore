@@ -24,3 +24,8 @@ yarn-error.log*
 
 # adding the .env file to the .gitignore to make sure it is privateeee
 .env
+
+venv/
+camera_server/venv/
+backend/myenv/
+__pycache__/
