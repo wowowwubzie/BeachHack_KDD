@@ -55,7 +55,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 9. Now go to the root directory (my-app) and type in the terminal: **npm run start:all** and it should be set
 
 ---
-#Resources
+# Resources
 
 OpenCV: https://github.com/opencv/opencv
 
