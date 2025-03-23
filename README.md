@@ -56,8 +56,11 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ---
 #Resources
+
 OpenCV: https://github.com/opencv/opencv
+
 ZBar: https://github.com/mchehab/zbar
+
 APIs: 
   - Open Food Repo: https://www.foodrepo.org/en
   - Food Data Central API: https://fdc.nal.usda.gov/api-spec/fdc_api.html
