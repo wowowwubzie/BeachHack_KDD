@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 
 const ScannerComponent = () => {
   const [scanning, setScanning] = useState(false);
+  const [foodData, setFoodData] = useState(null);
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const res = await axios.get("http://localhost:5001/last-scan");
+        setFoodData(res.data);
+      } catch (err) {
+        // No scan yet
+      }
+    }, 2000); // Poll every 2 seconds
+  
+    return () => clearInterval(interval);
+  }, []);
+  console.log("foodData (frontend):", foodData);
+  
   const handleStartScan = async () => {
     setScanning(true);
     try {
@@ -31,7 +48,7 @@ const ScannerComponent = () => {
 
   return (
     <div>
-      <h2>📷 Live Barcode Scanner</h2>
+      <h2>Live Barcode Scanner</h2>
       <img
         src="http://127.0.0.1:5000/video_feed"
         alt="Live camera stream"
@@ -56,10 +73,29 @@ const ScannerComponent = () => {
             onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
             onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
         >
-            {scanning ? "📷 Scanning..." : "🔍 Scan Barcode"}
+            {scanning ? "Scanning..." : "Scan Barcode"}
         </button>
-    </div>
+        {foodData && (
+            <div style={{
+              marginTop: "20px",
+              padding: "15px",
+              border: "1px solid #ccc",
+              borderRadius: "12px",
+              maxWidth: "500px",
+              marginInline: "auto",
+              backgroundColor: "#f9f9f9"
+            }}>
+              <h3>Info</h3>
+              <h4>NOTE: Only accounts for 1 serving size</h4>
+              <p><strong>Barcode:</strong> {foodData.barcode}</p>
+              <p><strong>Food Name:</strong> {foodData.food_name}</p>
+              <p><strong>Carbohydrates:</strong> {foodData.carbs}</p>
+              <p><strong>Safe Glycemic Index Range:</strong> 5 - 9</p>
+              <p><strong>Prediction: </strong> {foodData.prediction}</p>
+            </div>
+        )}
 
+    </div>
 
     </div>
   );
