@@ -27,6 +27,19 @@
 .App-link {
   color: #61dafb;
 }
+.nav-link {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #4a4a4a;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #007BFF; /* Bootstrap blue, you can change this */
+  text-decoration: underline;
+}
+
 
 @keyframes App-logo-spin {
   from {

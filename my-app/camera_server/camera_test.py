@@ -7,6 +7,7 @@ from flask import Flask, Response, jsonify
 app = Flask(__name__)
 
 scanned_barcodes = set()
+last_scanned_data = {}
 
 API_URL = "http://localhost:5001/nutrition"
 
@@ -58,6 +59,11 @@ def generate_frames():
 @app.route('/video_feed')
 def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/last-scan')
+def last_scan():
+    if last_scanned_data:
+        return jsonify(last_scanned_data)
+    return jsonify({"message": "No data yet"})
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
