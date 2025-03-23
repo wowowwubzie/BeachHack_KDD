@@ -54,4 +54,12 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
   - the interpreter path should now be of the venv environment
 9. Now go to the root directory (my-app) and type in the terminal: **npm run start:all** and it should be set
 
+---
+#Resources
+OpenCV: https://github.com/opencv/opencv
+ZBar: https://github.com/mchehab/zbar
+APIs: 
+  - Open Food Repo: https://www.foodrepo.org/en
+  - Food Data Central API: https://fdc.nal.usda.gov/api-spec/fdc_api.html
+
 
